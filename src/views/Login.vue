@@ -4,6 +4,7 @@
     <my-input tixing="请输入用户名" @sendVal="logVal"></my-input>
     <my-input tixing="请输入密码" @sendVal="logVal"></my-input>
     <my-input tixing="请输入昵称" @sendVal="logVal"></my-input>
+    <span class="iconfont iconweixin"></span>
   </div>
 </template>
 
@@ -22,4 +23,8 @@ export default {
 </script>
 
 <style>
+.iconfont {
+  font-size: 30px;
+  color: #23bd1d;
+}
 </style>
