@@ -7,8 +7,18 @@
       <div class="logo">
         <span class="iconfont iconnew"></span>
       </div>
-      <MyInput type="text" tixing="请输入用户名"></MyInput>
-      <MyInput type="password" tixing="请输入密码"></MyInput>
+      <MyInput
+        message="请输入正确的用户名"
+        :rule="/^.{6}$/"
+        type="text"
+        tixing="请输入用户名"
+      />
+      <MyInput
+        message="请输入合法的密码"
+        :rule="/^\d{6,12}$/"
+        type="password"
+        tixing="请输入密码"
+      />
       <MyButton></MyButton>
     </div>
   </div>
