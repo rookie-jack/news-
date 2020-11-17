@@ -7,9 +7,25 @@
       <div class="logo">
         <span class="iconfont iconnew"></span>
       </div>
-      <MyInput type="text" tixing="请输入用户名"></MyInput>
-      <MyInput type="password" tixing="请输入密码"></MyInput>
-      <MyButton></MyButton>
+      <MyInput
+        errMsg="请输入正确的用户名"
+        :rule="/^.{6}$/"
+        type="text"
+        tixing="请输入用户名"
+      />
+      <MyInput
+        errMsg="请输入合法的昵称"
+        :rule="/^.{3,8}$/"
+        type="text"
+        tixing="请输入昵称"
+      />
+      <MyInput
+        errMsg="请输入合法的密码"
+        :rule="/^\d{6,12}$/"
+        type="password"
+        tixing="请输入密码"
+      />
+      <MyButton btnText="注册"></MyButton>
     </div>
   </div>
 </template>
@@ -21,11 +37,6 @@ export default {
   components: {
     MyInput,
     MyButton,
-  },
-  methods: {
-    showToast() {
-      this.$toast.fail("文案");
-    },
   },
 };
 </script>
@@ -44,20 +55,6 @@ export default {
   .iconfont {
     font-size: 126/360 * 100vw;
     color: #d81e06;
-  }
-}
-.btnSubmit {
-  padding-top: 26/360 * 100vw;
-  button {
-    width: 100%;
-    // height: 48/360*100vw;
-    line-height: 48/360 * 100vw;
-    font-size: 18px;
-    background: #cc3300;
-    color: white;
-    border: none;
-    outline: none;
-    border-radius: 24/360 * 100vw;
   }
 }
 </style>
