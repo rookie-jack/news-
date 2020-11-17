@@ -8,18 +8,18 @@
         <span class="iconfont iconnew"></span>
       </div>
       <MyInput
-        message="请输入正确的用户名"
+        errMsg="请输入正确的用户名"
         :rule="/^.{6}$/"
         type="text"
         tixing="请输入用户名"
       />
       <MyInput
-        message="请输入合法的密码"
+        errMsg="请输入合法的密码"
         :rule="/^\d{6,12}$/"
         type="password"
         tixing="请输入密码"
       />
-      <MyButton></MyButton>
+      <MyButton btnText="登录"></MyButton>
     </div>
   </div>
 </template>
