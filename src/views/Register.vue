@@ -7,24 +7,25 @@
       <div class="logo">
         <span class="iconfont iconnew"></span>
       </div>
-      <div class="inputWrapper">
-        <my-input yskuang="text" tixing="请输入用户名"></my-input>
-      </div>
-      <div class="inputWrapper">
-        <my-input yskuang="password" tixing="请输入密码"></my-input>
-      </div>
-      <div class="btnSubmit">
-        <button>注册</button>
-      </div>
+      <MyInput type="text" tixing="请输入用户名"></MyInput>
+      <MyInput type="password" tixing="请输入密码"></MyInput>
+      <MyButton></MyButton>
     </div>
   </div>
 </template>
 
 <script>
+import MyButton from "../components/MyButton.vue";
 import MyInput from "../components/MyInput";
 export default {
   components: {
     MyInput,
+    MyButton,
+  },
+  methods: {
+    showToast() {
+      this.$toast.fail("文案");
+    },
   },
 };
 </script>
