@@ -33,7 +33,10 @@ export default {
   methods: {
     showErr() {
       if (!this.isOk) {
-        this.$toast.fail(this.errMsg);
+        this.$toast({
+          message: this.errMsg,
+          position: top,
+        });
       }
     },
   },

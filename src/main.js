@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import axios from "axios";
+
+// 绑定到原型
+Vue.prototype.$axios = axios;
+
 // 1. 导入组件库
 import Vant from 'vant'
 // 2. 引入组件 css 文件
