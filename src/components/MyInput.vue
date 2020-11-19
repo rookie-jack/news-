@@ -28,6 +28,7 @@ export default {
         console.log(this.errMsg);
         this.isOk = false;
       }
+      this.$emit("setValue", newValue);
     },
   },
   methods: {

@@ -8,18 +8,20 @@
         <span class="iconfont iconnew"></span>
       </div>
       <MyInput
+        @setValue="setUsername"
         errMsg="请输入正确的用户名"
-        :rule="/^.{6}$/"
+        :rule="/^.{5,11}$/"
         type="text"
         tixing="请输入用户名"
       />
       <MyInput
+        @setValue="setPassword"
         errMsg="请输入合法的密码"
-        :rule="/^\d{6,12}$/"
+        :rule="/^\d{3,12}$/"
         type="password"
         tixing="请输入密码"
       />
-      <MyButton btnText="登录"></MyButton>
+      <MyButton btnText="登录" @click.native="login"></MyButton>
     </div>
   </div>
 </template>
@@ -28,6 +30,33 @@
 import MyButton from "../components/MyButton.vue";
 import MyInput from "../components/MyInput";
 export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    setUsername(newValue) {
+      this.username = newValue;
+    },
+    setPassword(newValue) {
+      this.password = newValue;
+    },
+    login() {
+      this.$axios({
+        method: "post",
+        url: "http://157.122.54.189:9083/Login",
+        data: {
+          username: this.username,
+          password: this.password,
+        },
+      }).then((res) => {
+        console.log(res.data);
+        this.$toast.success(res.data.message);
+      });
+    },
+  },
   components: {
     MyInput,
     MyButton,
