@@ -16,7 +16,7 @@
       />
       <MyInput
         @setValue="setPassword"
-        errMsg="请输入合法的密码"
+        errMsg="密码必须是3到12位的数字"
         :rule="/^\d{3,12}$/"
         type="password"
         tixing="请输入密码"
@@ -53,7 +53,11 @@ export default {
         },
       }).then((res) => {
         console.log(res.data);
-        this.$toast.success(res.data.message);
+        if (res.data.message === "登录成功") {
+          this.$toast.success(res.data.message);
+        } else {
+          this.$toast(res.data.message);
+        }
       });
     },
   },

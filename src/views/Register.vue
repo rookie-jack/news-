@@ -8,24 +8,27 @@
         <span class="iconfont iconnew"></span>
       </div>
       <MyInput
+        @setValue="setusername"
         errMsg="请输入正确的用户名"
-        :rule="/^.{6}$/"
+        :rule="/^.{5,11}$/"
         type="text"
         tixing="请输入用户名"
       />
       <MyInput
+        @setValue="setnickname"
         errMsg="请输入合法的昵称"
         :rule="/^.{3,8}$/"
         type="text"
         tixing="请输入昵称"
       />
       <MyInput
-        errMsg="请输入合法的密码"
-        :rule="/^\d{6,12}$/"
+        @setValue="setpassword"
+        errMsg="密码必须是3到12位的数字"
+        :rule="/^\d{3,12}$/"
         type="password"
         tixing="请输入密码"
       />
-      <MyButton btnText="注册"></MyButton>
+      <MyButton btnText="注册" @click.native="register"></MyButton>
     </div>
   </div>
 </template>
@@ -34,6 +37,43 @@
 import MyButton from "../components/MyButton.vue";
 import MyInput from "../components/MyInput";
 export default {
+  data() {
+    return {
+      username: "",
+      nickname: "",
+      password: "",
+    };
+  },
+  methods: {
+    setusername(newValue) {
+      this.username = newValue;
+    },
+    setnickname(newValue) {
+      this.nickname = newValue;
+    },
+    setpassword(newValue) {
+      this.password = newValue;
+    },
+    register() {
+      this.$axios({
+        method: "post",
+        url: "http://157.122.54.189:9083/register",
+        data: {
+          username: this.username,
+          nickname: this.nickname,
+          password: this.password,
+        },
+      }).then((res) => {
+        console.log(res);
+        if (res.data.message === "注册成功") {
+          this.$toast.success(res.data.message);
+          this.$router.push("/login");
+        } else {
+          this.$toast(res.data.message);
+        }
+      });
+    },
+  },
   components: {
     MyInput,
     MyButton,
