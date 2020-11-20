@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <div class="user" @setid="userinfo">
+      <div class="user">
         <div class="userleft">
           <img src="../assets/logo.png" alt="" />
         </div>
@@ -15,7 +15,11 @@
         <span class="iconfont iconjiantou1"></span>
       </div>
       <div class="tool">
-        <user-bar :title="'我的关注'" :name="'关注的用户'"></user-bar>
+        <user-bar
+          @click.native="logText"
+          :title="'我的关注'"
+          :name="'关注的用户'"
+        ></user-bar>
         <user-bar :title="'我的跟帖'" :name="'跟帖/回复'"></user-bar>
         <user-bar :title="'我的收藏'" :name="'文章/视频'"></user-bar>
         <user-bar :title="'设置'"></user-bar>
@@ -29,14 +33,8 @@ import UserBar from "../components/UserBar.vue";
 export default {
   components: { UserBar },
   methods: {
-    userinfo(id) {
-      this.$axios({
-        methods: "get",
-        url: "http://157.122.54.189:9083/user/:id",
-        params: { id },
-      }).then((res) => {
-        console.log(res);
-      });
+    logText(str) {
+      console.log(str);
     },
   },
 };

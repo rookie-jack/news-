@@ -63,7 +63,6 @@ export default {
           this.$router.push({
             path: "/user" + "?id=" + res.data.data.user.id,
           });
-          this.$emit("setid", res.data.data.user.id);
         } else {
           this.$toast(res);
         }
