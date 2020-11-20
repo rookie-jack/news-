@@ -26,7 +26,7 @@ export default {
     font-size: 16 /360 * 100vw;
   }
   .desc {
-    margin-left: 140 /360 * 100vw;
+    margin-left: 120 /360 * 100vw;
     color: #aaa;
   }
   .iconjiantou1 {
