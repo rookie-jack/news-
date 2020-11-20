@@ -54,17 +54,14 @@ export default {
       }).then((res) => {
         // console.log(res.data);
         if (res.data.message === "登录成功") {
-          this.$toast.success(res.data.message);
-          // console.log(res.data.data.user.id);
-          // this.$router.push({
-          //   name: "user",
-          //   param: { id: res.data.data.user.id },
-          // });
-          this.$router.push({
-            path: "/user" + "?id=" + res.data.data.user.id,
-          });
+          // this.$toast.success(res.data.message);
+          console.log(res.data);
+          this.$router.push("/user");
+
+          localStorage.setItem("token", res.data.data.token);
+          localStorage.setItem("userId", res.data.data.user.id);
         } else {
-          this.$toast(res);
+          this.$toast(res.data.message);
         }
       });
     },
