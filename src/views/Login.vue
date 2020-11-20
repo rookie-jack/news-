@@ -52,11 +52,20 @@ export default {
           password: this.password,
         },
       }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.message === "登录成功") {
           this.$toast.success(res.data.message);
+          // console.log(res.data.data.user.id);
+          // this.$router.push({
+          //   name: "user",
+          //   param: { id: res.data.data.user.id },
+          // });
+          this.$router.push({
+            path: "/user" + "?id=" + res.data.data.user.id,
+          });
+          this.$emit("setid", res.data.data.user.id);
         } else {
-          this.$toast(res.data.message);
+          this.$toast(res);
         }
       });
     },
