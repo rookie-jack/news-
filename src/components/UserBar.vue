@@ -18,7 +18,6 @@ export default {
 <style lang="less" scoped>
 .tool {
   display: flex;
-  justify-content: space-between;
   border-bottom: 1px solid #bbb;
   margin: 0 30 /360 * 100vw;
   line-height: 60 /360 * 100vw;
@@ -26,7 +25,10 @@ export default {
     font-size: 16 /360 * 100vw;
   }
   .desc {
-    margin-left: 120 /360 * 100vw;
+    // margin-left: 120 /360 * 100vw;
+    flex-grow: 1;
+    text-align: right;
+    padding-right: 8 /360 * 100vw;
     color: #aaa;
   }
   .iconjiantou1 {
