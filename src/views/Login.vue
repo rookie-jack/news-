@@ -46,7 +46,7 @@ export default {
     login() {
       this.$axios({
         method: "post",
-        url: "http://157.122.54.189:9083/Login",
+        url: "/Login",
         data: {
           username: this.username,
           password: this.password,
@@ -60,8 +60,6 @@ export default {
 
           localStorage.setItem("token", res.data.data.token);
           localStorage.setItem("userId", res.data.data.user.id);
-        } else {
-          this.$toast(res.data.message);
         }
       });
     },

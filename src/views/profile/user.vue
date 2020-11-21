@@ -4,7 +4,7 @@
       <div class="user">
         <img
           v-if="userInfo.head_img"
-          :src="'http://157.122.54.189:9083' + userInfo.head_img"
+          :src="$axios.default.baseURL + userInfo.head_img"
           class="avatar"
         />
         <img v-else src="../../assets/logo.png" alt="" class="avatar" />
@@ -49,7 +49,7 @@ export default {
   },
   created() {
     this.$axios({
-      url: "http://157.122.54.189:9083/user/" + localStorage.getItem("userId"),
+      url: "/user/" + localStorage.getItem("userId"),
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -60,6 +60,15 @@ export default {
         this.userInfo = data;
         console.log(this.userInfo);
       }
+      // else {
+      //   this.$toast.fail("信息获取失败");
+      //   // 知道了用户的信息是错的
+      //   // 删除信息
+      //   localStorage.removeItem("token");
+      //   localStorage.removeItem("userId");
+      //   // 跳转到登录页
+      //   this.$router.replace("/login");
+      // }
     });
   },
   methods: {

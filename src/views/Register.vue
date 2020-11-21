@@ -57,7 +57,7 @@ export default {
     register() {
       this.$axios({
         method: "post",
-        url: "http://157.122.54.189:9083/register",
+        url: "/register",
         data: {
           username: this.username,
           nickname: this.nickname,
@@ -68,8 +68,6 @@ export default {
         if (res.data.message === "注册成功") {
           this.$toast.success(res.data.message);
           this.$router.push("/login");
-        } else {
-          this.$toast(res.data.message);
         }
       });
     },

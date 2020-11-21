@@ -42,7 +42,7 @@ router.beforeEach((to, form, next) => {
     if (localStorage.getItem('token')) {
       return next();
     } else {
-      return router.push('/login').catch(err => { })
+      return router.push('/login')
     }
   }
   return next();
