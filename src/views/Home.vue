@@ -10,7 +10,7 @@
       <van-button type="info" @click="showTos">发送请求</van-button><br />
       <router-link to="/login">登录</router-link><br />
       <router-link to="/register">注册</router-link><br />
-      <router-link to="/user">个人中心</router-link>
+      <router-link to="/user">个人中心</router-link><br />
       <router-link to="/useredit">编辑信息</router-link>
     </div>
   </div>

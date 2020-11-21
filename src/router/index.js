@@ -15,7 +15,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/Login',
+    path: '/login',
     component: Login
   },
   {
@@ -25,11 +25,17 @@ const routes = [
   {
     name: 'user',
     path: '/user',
-    component: User
+    component: User,
+    meta: {
+      needAuth: true
+    }
   },
   {
     path: '/useredit',
-    component: Useredit
+    component: Useredit,
+    meta: {
+      needAuth: true
+    }
   }
 ]
 
@@ -38,11 +44,19 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, form, next) => {
-  if (to.path == '/user') {
+  console.log("看看当前路由源信息是什么");
+  console.log(to.meta);
+  // if (to.path == '/user' || to.path == 'useredit') {
+  // const pagesNeedAuth = [
+  //   '/user',
+  //   '/useredit'
+  // ]
+  // if (pagesNeedAuth.indexOf(to.path) > -1) {
+  if (to.meta.needAuth) {
     if (localStorage.getItem('token')) {
       return next();
     } else {
-      return router.push('/login')
+      return router.push('/login').catch(err => { })
     }
   }
   return next();

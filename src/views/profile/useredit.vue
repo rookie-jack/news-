@@ -12,7 +12,6 @@
         <UserBar title="昵称" name="沙雕网友" />
         <UserBar title="密码" name="******" />
         <UserBar title="性别" name="男" />
-        <user-bar></user-bar>
       </div>
     </div>
   </div>
