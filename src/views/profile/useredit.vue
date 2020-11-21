@@ -3,12 +3,18 @@
     <div class="container">
       <TopNav title="编辑信息" />
       <div class="user">
-        <img src="../../assets/logo.png" alt="" class="avatar" />
+        <img
+          v-if="userInfo.head_img"
+          :src="$axios.defaults.baseURL + userInfo.head_img"
+          alt=""
+          class="avatar"
+        />
+        <img v-else src="../../assets/logo.png" alt="" class="avatar" />
       </div>
       <div class="tool">
-        <UserBar title="昵称" name="沙雕网友" />
+        <UserBar title="昵称" :name="userInfo.nickname" />
         <UserBar title="密码" name="******" />
-        <UserBar title="性别" name="男" />
+        <UserBar title="性别" :name="userInfo.gender == 1 ? '雄性' : '雌性'" />
       </div>
     </div>
   </div>
@@ -19,6 +25,26 @@ import TopNav from "../../components/TopNav.vue";
 import UserBar from "../../components/UserBar.vue";
 export default {
   components: { UserBar, TopNav },
+  data() {
+    return {
+      userInfo: {},
+    };
+  },
+  created() {
+    this.$axios({
+      url: "/user/" + localStorage.getItem("userId"),
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }).then((res) => {
+      console.log(res);
+      const { message, data } = res.data;
+      if (message == "获取成功") {
+        this.userInfo = data;
+        console.log(this.userInfo);
+      }
+    });
+  },
 };
 </script>
 
