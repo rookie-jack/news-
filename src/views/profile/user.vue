@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <div class="user">
+      <div class="user" @click="$router.push('/useredit')">
         <img
           v-if="userInfo.head_img"
           :src="$axios.default.baseURL + userInfo.head_img"
@@ -31,7 +31,7 @@
         />
         <UserBar title="我的跟帖" name="跟帖/回复" />
         <UserBar title="我的收藏" name="文章/视频" />
-        <UserBar title="设置" />
+        <UserBar title="设置" @click.native="$router.push('/useredit')" />
         <UserBar title="退出" @click.native="logout" />
       </div>
     </div>

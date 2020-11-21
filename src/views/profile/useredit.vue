@@ -1,10 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <div class="header">
-        <span class="iconfont iconjiantou2"></span>
-        <b>编辑资料</b>
-      </div>
+      <TopNav title="编辑信息" />
       <div class="user">
         <img src="../../assets/logo.png" alt="" class="avatar" />
       </div>
@@ -18,9 +15,10 @@
 </template>
 
 <script>
+import TopNav from "../../components/TopNav.vue";
 import UserBar from "../../components/UserBar.vue";
 export default {
-  components: { UserBar },
+  components: { UserBar, TopNav },
 };
 </script>
 
@@ -30,20 +28,6 @@ export default {
   height: 600 /360 * 100vw;
   background-color: #f0f0f0;
   text-align: center;
-
-  .header {
-    height: 50 /360 * 100vw;
-    line-height: 50 /360 * 100vw;
-    .iconjiantou2 {
-      float: left;
-      margin-left: 10 /360 * 100vw;
-      font-size: 20 /360 * 100vw;
-    }
-    b {
-      margin-left: -20 /360 * 100vw;
-      font-size: 16 /360 * 100vw;
-    }
-  }
 
   .user {
     .avatar {
