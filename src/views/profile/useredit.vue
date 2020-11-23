@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <TopNav title="编辑信息" />
-      <div class="user">
+      <van-uploader :after-read="afterRead" class="user">
         <img
           v-if="userInfo.head_img"
           :src="$axios.defaults.baseURL + userInfo.head_img"
@@ -10,7 +10,7 @@
           class="avatar"
         />
         <img v-else src="../../assets/logo.png" alt="" class="avatar" />
-      </div>
+      </van-uploader>
       <div class="tool">
         <UserBar
           title="昵称"
@@ -101,49 +101,66 @@ export default {
     // 修改用户名的请求
     setnewNickname() {
       console.log(this.newNickname);
-      this.$axios({
-        method: "post",
-        url: "/user_update/" + localStorage.getItem("userId"),
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-        data: {
-          nickname: this.newNickname,
-        },
-      }).then((res) => {
-        console.log(res.data);
-        this.loadPage();
-      });
+      const newData = {
+        nickname: this.newNickname,
+      };
+
+      this.editProfile(newData);
     },
     // 修改密码的请求
     setPassword() {
-      this.$axios({
-        method: "post",
-        url: "/user_update/" + localStorage.getItem("userId"),
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-        data: {
-          password: this.newPassword,
-        },
-      }).then((res) => {
-        console.log(res.data);
-        this.loadPage();
-      });
+      const newData = {
+        password: this.newPassword,
+      };
+
+      this.editProfile(newData);
     },
     setGender(item) {
+      const newData = {
+        gender: item.gender,
+      };
+
+      this.editProfile(newData);
+      this.isshowGender = false;
+    },
+    afterRead(fileObj) {
+      console.log(fileObj);
+
+      const fd = new FormData();
+      fd.append("file", fileObj.file);
+
+      this.$axios({
+        method: "post",
+        url: "/upload",
+        data: fd,
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }).then((res) => {
+        console.log(res.data);
+        const { message, data } = res.data;
+        fd.append("file", fileObj.file);
+        if (message == "文件上传成功") {
+          console.log(data.url);
+
+          const newData = {
+            head_img: data.url,
+          };
+
+          this.editProfile(newData);
+        }
+      });
+    },
+    editProfile(newData) {
       this.$axios({
         method: "post",
         url: "/user_update/" + localStorage.getItem("userId"),
         headers: {
           Authorization: localStorage.getItem("token"),
         },
-        data: {
-          gender: item.gender,
-        },
+        data: newData,
       }).then((res) => {
         console.log(res.data);
-        this.isshowGender = false;
         this.loadPage();
       });
     },
