@@ -87,9 +87,6 @@ export default {
     loadPage() {
       this.$axios({
         url: "/user/" + localStorage.getItem("userId"),
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
       }).then((res) => {
         console.log(res);
         const { message, data } = res.data;
@@ -133,9 +130,6 @@ export default {
         method: "post",
         url: "/upload",
         data: fd,
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
       }).then((res) => {
         console.log(res.data);
         const { message, data } = res.data;
@@ -155,9 +149,6 @@ export default {
       this.$axios({
         method: "post",
         url: "/user_update/" + localStorage.getItem("userId"),
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
         data: newData,
       }).then((res) => {
         console.log(res.data);

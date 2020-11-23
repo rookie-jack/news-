@@ -50,9 +50,6 @@ export default {
   created() {
     this.$axios({
       url: "/user/" + localStorage.getItem("userId"),
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
     }).then((res) => {
       console.log(res);
       const { message, data } = res.data;
