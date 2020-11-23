@@ -3,8 +3,10 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import Test from '../views/Test.vue'
 import User from '../views/profile/user.vue'
 import Useredit from '../views/profile/useredit.vue'
+import Follow from '../views/profile/Follow.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +25,10 @@ const routes = [
     component: Register
   },
   {
+    path: '/test',
+    component: Test
+  },
+  {
     name: 'user',
     path: '/user',
     component: User,
@@ -33,6 +39,13 @@ const routes = [
   {
     path: '/useredit',
     component: Useredit,
+    meta: {
+      needAuth: true
+    }
+  },
+  {
+    path: '/follow',
+    component: Follow,
     meta: {
       needAuth: true
     }

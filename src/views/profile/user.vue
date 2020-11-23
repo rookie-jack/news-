@@ -4,7 +4,7 @@
       <div class="user" @click="$router.push('/useredit')">
         <img
           v-if="userInfo.head_img"
-          :src="$axios.default.baseURL + userInfo.head_img"
+          :src="$axios.defaults.baseURL + userInfo.head_img"
           class="avatar"
         />
         <img v-else src="../../assets/logo.png" alt="" class="avatar" />
@@ -25,7 +25,7 @@
       </div>
       <div class="tool">
         <UserBar
-          @click.native="logText"
+          @click.native="$router.push('/follow')"
           :title="'我的关注'"
           :name="'关注的用户'"
         />

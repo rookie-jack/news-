@@ -6,7 +6,6 @@
         <img
           v-if="userInfo.head_img"
           :src="$axios.defaults.baseURL + userInfo.head_img"
-          alt=""
           class="avatar"
         />
         <img v-else src="../../assets/logo.png" alt="" class="avatar" />

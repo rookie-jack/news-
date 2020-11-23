@@ -10,7 +10,7 @@
       <MyInput
         @setValue="setUsername"
         errMsg="请输入正确的用户名"
-        :rule="/^.{5,11}$/"
+        :rule="/^.{3,15}$/"
         type="text"
         tixing="请输入用户名"
       />
