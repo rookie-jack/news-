@@ -1,23 +1,29 @@
 <template>
   <div>
-    <button @click="follow(1)">关注用户1</button>
-    <button @click="follow(2)">关注用户2</button>
-    <button @click="follow(3)">关注用户3</button>
-    <button @click="follow(1339)">关注用户1339</button>
-    <button @click="follow(110)">关注用户110</button>
+    <post-item
+      :PostData="post"
+      v-for="post in PostList"
+      :key="post.id"
+    ></post-item>
   </div>
 </template>
 
 <script>
+import PostItem from "../components/PostItem.vue";
 export default {
-  methods: {
-    follow(id) {
-      this.$axios({
-        url: "/user_follows/" + id,
-      }).then((res) => {
-        console.log(res.data);
-      });
-    },
+  components: { PostItem },
+  data() {
+    return {
+      PostList: [],
+    };
+  },
+  created() {
+    this.$axios({
+      url: "/post",
+    }).then((res) => {
+      console.log(res);
+      this.PostList = res.data.data;
+    });
   },
 };
 </script>

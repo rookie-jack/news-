@@ -58,6 +58,15 @@ import Vant, { Toast } from 'vant'
 import 'vant/lib/index.css'
 // 3. 注册 vant ui 组件库的标签
 Vue.use(Vant)
+
+Vue.filter('fixImgUrl', (oldUrl) => {
+  if (oldUrl.indexOf("http") > -1) {
+    return oldUrl
+  } else {
+    return this.axios.defaults.baseURL + oldUrl
+  }
+})
+
 Vue.config.productionTip = false
 
 new Vue({
