@@ -81,7 +81,6 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  width: 100vw;
   height: 600 /360 * 100vw;
   background-color: #f0f0f0;
 
@@ -89,7 +88,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100vw;
     height: 80 /360 * 100vw;
     padding: 20 /360 * 100vw 40 /360 * 100vw 20 /360 * 100vw;
     border-bottom: 10 /360 * 100vw solid #ccc;
