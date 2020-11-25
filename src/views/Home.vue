@@ -26,25 +26,36 @@ export default {
     };
   },
   methods: {},
+  watch: {
+    activeCategoryIndex() {
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      this.$axios({
+        url: "/post",
+        params: {
+          category: currentCategory.id,
+        },
+      }).then((res) => {
+        console.log(res.data);
+        this.PostList = res.data.data;
+      });
+    },
+  },
   created() {
     this.$axios({
       url: "/category",
     }).then((res) => {
       console.log(res);
-      this.categoryList = res.data.data.map((category) => {
-        return {
-          ...category,
-          PostList: [],
-        };
+      this.categoryList = res.data.data;
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      this.$axios({
+        url: "/post",
+        params: {
+          category: currentCategory.id,
+        },
+      }).then((res) => {
+        console.log(res.data);
+        this.PostList = res.data.data;
       });
-    });
-
-    this.$axios({
-      url: "/post",
-    }).then((res) => {
-      console.log(res);
-      this.PostList = res.data.data;
-      console.log(this.PostList[0].categories);
     });
   },
 };
