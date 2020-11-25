@@ -92,10 +92,12 @@ export default {
     font-size: 16 /360 * 100vw;
     color: #333;
   }
+
   .info {
     font-size: 14 /360 * 100vw;
     color: #888;
   }
+
   .coverWrapper {
     display: flex;
     justify-content: space-between;
@@ -118,16 +120,21 @@ export default {
 
   .coverWrapper {
     position: relative;
+
+    .cover {
+      width: 340 /360 * 100vw;
+    }
     .swicth {
       position: absolute;
       left: 45%;
       top: 40%;
       background-color: rgba(0, 0, 0, 0.3);
+      padding: 0 2 /360 * 100vw;
       border-radius: 50%;
 
       .iconshipin {
         font-size: 46 /360 * 100vw;
-        color: #333;
+        color: #eee;
       }
     }
   }

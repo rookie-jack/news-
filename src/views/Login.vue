@@ -29,6 +29,7 @@
 <script>
 import MyButton from "../components/MyButton.vue";
 import MyInput from "../components/MyInput";
+import { login } from "./loginApi";
 export default {
   data() {
     return {
@@ -44,23 +45,20 @@ export default {
       this.password = newValue;
     },
     login() {
-      this.$axios({
-        method: "post",
-        url: "/Login",
-        data: {
-          username: this.username,
-          password: this.password,
-        },
-      }).then((res) => {
+      const data = {
+        username: this.username,
+        password: this.password,
+      };
+      login(data).then((res) => {
         // console.log(res.data);
         if (res.data.message === "登录成功") {
           // this.$toast.success(res.data.message);
           console.log(res.data);
-          this.$router.push("/user");
 
           localStorage.setItem("token", res.data.data.token);
           localStorage.setItem("userId", res.data.data.user.id);
         }
+        this.$router.push("/user");
       });
     },
   },

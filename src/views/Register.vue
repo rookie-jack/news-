@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { register } from "./loginApi";
 import MyButton from "../components/MyButton.vue";
 import MyInput from "../components/MyInput";
 export default {
@@ -55,15 +56,12 @@ export default {
       this.password = newValue;
     },
     register() {
-      this.$axios({
-        method: "post",
-        url: "/register",
-        data: {
-          username: this.username,
-          nickname: this.nickname,
-          password: this.password,
-        },
-      }).then((res) => {
+      const data = {
+        username: this.username,
+        nickname: this.nickname,
+        password: this.password,
+      };
+      register(data).then((res) => {
         console.log(res);
         if (res.data.message === "注册成功") {
           this.$toast.success(res.data.message);
