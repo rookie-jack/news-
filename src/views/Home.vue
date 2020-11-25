@@ -7,7 +7,11 @@
         :key="category.id"
         :title="category.name"
       >
-        <PostItem :PostData="post" v-for="post in PostList" :key="post.id" />
+        <PostItem
+          :PostData="post"
+          v-for="post in category.PostList"
+          :key="post.id"
+        />
       </van-tab>
     </van-tabs>
   </div>
@@ -22,22 +26,14 @@ export default {
     return {
       activeCategoryIndex: 0,
       categoryList: [],
-      PostList: [],
     };
   },
-  methods: {},
   watch: {
     activeCategoryIndex() {
       const currentCategory = this.categoryList[this.activeCategoryIndex];
-      this.$axios({
-        url: "/post",
-        params: {
-          category: currentCategory.id,
-        },
-      }).then((res) => {
-        console.log(res.data);
-        this.PostList = res.data.data;
-      });
+      if (currentCategory.PostList.length == 0) {
+        this.loadPost();
+      }
     },
   },
   created() {
@@ -45,7 +41,17 @@ export default {
       url: "/category",
     }).then((res) => {
       console.log(res);
-      this.categoryList = res.data.data;
+      this.categoryList = res.data.data.map((item) => {
+        return {
+          ...item,
+          PostList: [],
+        };
+      });
+      this.loadPost();
+    });
+  },
+  methods: {
+    loadPost() {
       const currentCategory = this.categoryList[this.activeCategoryIndex];
       this.$axios({
         url: "/post",
@@ -54,9 +60,10 @@ export default {
         },
       }).then((res) => {
         console.log(res.data);
-        this.PostList = res.data.data;
+        currentCategory.PostList = res.data.data;
+        console.log(this.categoryList);
       });
-    });
+    },
   },
 };
 </script>
