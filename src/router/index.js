@@ -8,6 +8,7 @@ import User from '../views/profile/user.vue'
 import Useredit from '../views/profile/useredit.vue'
 import Follow from '../views/profile/Follow.vue'
 import Star from '../views/profile/star.vue'
+import Stardetails from '../views/profile/stardetails.vue'
 
 Vue.use(VueRouter)
 
@@ -54,6 +55,13 @@ const routes = [
   {
     path: '/star',
     component: Star,
+    meta: {
+      needAuth: true
+    }
+  },
+  {
+    path: '/stardetails',
+    component: Stardetails,
     meta: {
       needAuth: true
     }

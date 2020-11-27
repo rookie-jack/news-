@@ -1,6 +1,5 @@
 <template>
   <div>
-    收藏页
     <TopNav title="我的收藏" />
     <PostItem :PostData="post" v-for="post in postList" :key="post.id" />
   </div>

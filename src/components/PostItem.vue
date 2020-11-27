@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="$router.push('/stardetails?id=' + PostData.id)">
     <!-- 显示一张图片 -->
     <div
       v-if="
