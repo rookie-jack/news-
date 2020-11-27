@@ -30,7 +30,11 @@
           :name="'关注的用户'"
         />
         <UserBar title="我的跟帖" name="跟帖/回复" />
-        <UserBar title="我的收藏" name="文章/视频" />
+        <UserBar
+          @click.native="$router.push('/star')"
+          title="我的收藏"
+          name="文章/视频"
+        />
         <UserBar title="设置" @click.native="$router.push('/useredit')" />
         <UserBar title="退出" @click.native="logout" />
       </div>

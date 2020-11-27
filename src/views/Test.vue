@@ -1,29 +1,20 @@
 <template>
   <div>
-    <post-item
-      :PostData="post"
-      v-for="post in PostList"
-      :key="post.id"
-    ></post-item>
+    <button @click="guan(2)">收藏2</button>
   </div>
 </template>
 
 <script>
-import PostItem from "../components/PostItem.vue";
 export default {
-  components: { PostItem },
-  data() {
-    return {
-      PostList: [],
-    };
-  },
-  created() {
-    this.$axios({
-      url: "/post",
-    }).then((res) => {
-      console.log(res);
-      this.PostList = res.data.data;
-    });
+  methods: {
+    guan(id) {
+      this.$axios({
+        url: "/post_star/" + id,
+      }).then((res) => {
+        console.log(res);
+        this.PostList = res.data;
+      });
+    },
   },
 };
 </script>
