@@ -1,0 +1,51 @@
+<template>
+  <div>
+    <div class="parentBox">
+      <parent :parentData="parentData.parent" v-if="parentData.parent" />
+      <div class="info">
+        <div class="name">火星网友</div>
+        <div class="date">2小时前</div>
+        <div class="btn">回复</div>
+      </div>
+      <div class="mainContent">
+        {{ parentData.content }}
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "parent",
+  props: ["parentData"],
+};
+</script>
+
+<style lang="less" scoped>
+.parentBox {
+  padding: 2px;
+  border: 1px solid #e4e4e4;
+  .info {
+    display: flex;
+    align-items: center;
+    font-size: 14 /360 * 100vw;
+    color: #444;
+    margin-bottom: 10 /360 * 100vw;
+
+    .date {
+      flex-grow: 1;
+      font-size: 12 /360 * 100vw;
+      color: #888;
+      padding-left: 10 /360 * 100vw;
+    }
+    .btn {
+      color: #888;
+    }
+  }
+  .mainContent {
+    font-size: 14 /360 * 100vw;
+    color: #888;
+    margin-bottom: 4 /360 * 100vw;
+  }
+}
+</style>

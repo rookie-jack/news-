@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button @click="guan(1)">收藏1</button>
     <button @click="guan(2)">收藏2</button>
     <button @click="guan(3)">收藏3</button>
     <button @click="guan(4)">收藏4</button>
@@ -7,6 +8,7 @@
     <button @click="guan(6)">收藏6</button>
     <button @click="guan(7)">收藏7</button>
 
+    <button @click="zhu(1)">关注1</button>
     <button @click="zhu(2)">关注2</button>
     <button @click="zhu(3)">关注3</button>
     <button @click="zhu(4)">关注4</button>
@@ -28,34 +30,23 @@
 </template>
 
 <script>
-import Main from "../components/main.vue";
+import Main from "../components/comment/main";
 import DiguiTest from "./DiguiTest.vue";
 export default {
   components: { DiguiTest, Main },
   data() {
     return {
       num: 10,
-      commentList: [
-        {
-          content: "哈哈哈",
-        },
-        {
-          content: "嘿嘿嘿",
-        },
-        {
-          content: "秋天第一条秋裤",
-          parent: {
-            content: "夏天第一双AJ",
-            parent: {
-              content: "春天第一栋别墅",
-              parent: {
-                content: "黄天第一条头巾",
-              },
-            },
-          },
-        },
-      ],
+      commentList: [],
     };
+  },
+  created() {
+    this.$axios({
+      url: "/post_comment/1",
+    }).then((res) => {
+      console.log(res);
+      this.commentList = res.data.data;
+    });
   },
   methods: {
     guan(id) {
@@ -108,7 +99,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.box {
-  border: 1px solid #f9c;
-}
 </style>

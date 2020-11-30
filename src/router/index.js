@@ -9,6 +9,7 @@ import Useredit from '../views/profile/useredit.vue'
 import Follow from '../views/profile/Follow.vue'
 import Star from '../views/profile/star.vue'
 import Stardetails from '../views/profile/stardetails.vue'
+import MoreComment from '../views/MoreComment.vue'
 
 Vue.use(VueRouter)
 
@@ -65,6 +66,10 @@ const routes = [
     meta: {
       needAuth: true
     }
+  },
+  {
+    path: '/morecomment/:id',
+    component: MoreComment,
   }
 ]
 

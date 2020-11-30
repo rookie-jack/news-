@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="boxs">
     <!-- 图片文章样式 -->
     <div class="picture" v-if="postData.type == 1">
       <div class="header">
@@ -67,15 +67,35 @@
         微信
       </div>
     </div>
+
+    <h2 class="comments">精彩跟帖</h2>
+    <Main
+      :commentData="comment"
+      v-for="comment in commentList"
+      :key="comment.id"
+    />
+
+    <div
+      class="btnMoreComment"
+      @click="$router.push('/morecomment/' + postData.id)"
+    >
+      更多跟帖
+    </div>
+
+    <Input />
   </div>
 </template>
 
 <script>
+import Input from "../../components/comment/Input.vue";
+import Main from "../../components/comment/main";
 export default {
+  components: { Main, Input },
   data() {
     return {
       postData: [],
       date: new Date(),
+      commentList: [],
     };
   },
   mounted() {
@@ -143,11 +163,25 @@ export default {
   },
   created() {
     this.loadPost();
+    this.$axios({
+      url: "/post_comment/" + this.$route.query.id,
+    }).then((res) => {
+      console.log(res.data.data);
+      console.log(this.$route.query.id);
+      if (res.data.data.length > 3) {
+        res.data.data.length = 3;
+      }
+      this.commentList = res.data.data;
+    });
   },
 };
 </script>
 
 <style lang="less" scoped>
+.boxs {
+  padding-bottom: 50 /360 * 100vw;
+}
+
 .picture {
   padding: 0 15 /360 * 100vw;
   .header {
@@ -274,5 +308,22 @@ export default {
       color: #00d612;
     }
   }
+}
+
+.comments {
+  text-align: center;
+  font-size: 26 /360 * 100vw;
+  font-weight: 700;
+  padding: 20 /360 * 100vw;
+}
+
+.btnMoreComment {
+  margin: 30 /360 * 100vw auto;
+  width: 121 /360 * 100vw;
+  height: 30 /360 * 100vw;
+  border: 1px solid #888;
+  font-size: 18 /360 * 100vw;
+  text-align: center;
+  border-radius: 15 /360 * 100vw;
 }
 </style>
