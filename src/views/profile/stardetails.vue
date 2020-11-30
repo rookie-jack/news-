@@ -1,17 +1,29 @@
 <template>
   <div>
-    <div class="top" v-if="postData.type == 1">
+    <!-- 图片文章样式 -->
+    <div class="picture" v-if="postData.type == 1">
       <div class="header">
         <span class="iconfont iconjiantou2"></span>
         <span class="iconfont iconnew"></span>
-        <span class="btnFollow" @click="hanlder">已关注</span>
+        <div
+          class="btnFollow"
+          :class="{
+            unFollow: !postData.has_follow,
+          }"
+          @click="hanlder"
+        >
+          {{ postData.has_follow ? "已关注" : "关注" }}
+        </div>
       </div>
       <div class="main">
         <div class="title">{{ postData.title }}</div>
-        <div class="info">{{ postData.user.nickname }} 2019-10-12</div>
+        <div class="info">
+          {{ postData.user.nickname }} {{ date.toLocaleDateString() }}
+        </div>
         <div class="content" v-html="postData.content"></div>
       </div>
     </div>
+    <!-- 视频文章样式 -->
     <div class="videoPost" v-if="postData.type == 2">
       <video
         ref="vio"
@@ -25,16 +37,31 @@
       <div class="info">
         <img src="@/assets/logo.png" alt="" class="avatar" />
         <div class="name">{{ postData.user.nickname }}</div>
-        <div class="btnFollow" @click="hanlder">关注</div>
+        <div
+          class="btnFollow"
+          :class="{
+            unFollow: !postData.has_follow,
+          }"
+          @click="hanlder"
+        >
+          {{ postData.has_follow ? "已关注" : "关注" }}
+        </div>
       </div>
       <div class="title">{{ postData.title }}</div>
     </div>
 
     <div class="btns">
+      <!-- 点赞按钮 -->
       <div class="btn dianzan" @click="dianzan">
-        <span class="iconfont icondianzan" ref="def"></span>
+        <span
+          class="iconfont icondianzan"
+          :class="{
+            red: postData.has_like,
+          }"
+        ></span>
         {{ postData.like_length }}
       </div>
+      <!-- 微信按钮 -->
       <div class="btn weixin">
         <span class="iconfont iconweixin"></span>
         微信
@@ -48,20 +75,27 @@ export default {
   data() {
     return {
       postData: [],
+      date: new Date(),
     };
   },
   mounted() {
     console.log(this.$route.query.id);
   },
   methods: {
+    loadPost() {
+      this.$axios({
+        url: "/post/" + this.$route.query.id,
+      }).then((res) => {
+        console.log(res);
+        this.postData = res.data.data;
+      });
+    },
     hanlder() {
       if (this.postData.has_follow == false) {
         this.$axios({
           url: "/user_follows/" + this.postData.id,
         }).then((res) => {
           console.log(res);
-          document.querySelector(".btnFollow").innerText = "已关注";
-          document.querySelector(".btnFollow").classList.remove("unFollow");
           this.postData.has_follow = true;
           this.$toast.success(res.data.message);
         });
@@ -70,8 +104,6 @@ export default {
           url: "/user_unfollow/" + this.postData.id,
         }).then((res) => {
           console.log(res);
-          document.querySelector(".btnFollow").innerText = "关注";
-          document.querySelector(".btnFollow").classList.add("unFollow");
           this.postData.has_follow = false;
           this.$toast(res.data.message);
         });
@@ -83,13 +115,15 @@ export default {
       }).then((res) => {
         console.log(res);
         if (res.data.message == "点赞成功") {
-          this.$refs.def.style.color = "red";
+          //   this.$refs.def.style.color = "red";
           this.postData.like_length++;
           this.$toast.success(res.data.message);
+          this.loadPost();
         } else {
-          this.$refs.def.style.color = "";
+          //   this.$refs.def.style.color = "";
           this.postData.like_length--;
           this.$toast(res.data.message);
+          this.loadPost();
         }
       });
 
@@ -108,60 +142,58 @@ export default {
     },
   },
   created() {
-    this.$axios({
-      url: "/post/" + this.$route.query.id,
-    }).then((res) => {
-      console.log(res);
-      this.postData = res.data.data;
-    });
+    this.loadPost();
   },
 };
 </script>
 
 <style lang="less" scoped>
-.header {
-  display: flex;
-  align-items: center;
-  height: 50 /360 * 100vw;
-  text-align: center;
-  .iconjiantou2 {
-    margin-left: 10 /360 * 100vw;
-    font-size: 14 /360 * 100vw;
-  }
-  .iconnew {
-    margin-left: 10 /360 * 100vw;
-    font-size: 40 /360 * 100vw;
-  }
-  .btnFollow {
-    width: 50 /360 * 100vw;
-    line-height: 24 /360 * 100vw;
-    margin-left: 220 /360 * 100vw;
-    font-size: 10 /360 * 100vw;
-    border: 1px solid #999;
-    border-radius: 15 /360 * 100vw;
+.picture {
+  padding: 0 15 /360 * 100vw;
+  .header {
+    display: flex;
+    align-items: center;
+    height: 50 /360 * 100vw;
+    text-align: center;
+    .iconjiantou2 {
+      margin-left: 10 /360 * 100vw;
+      font-size: 14 /360 * 100vw;
+    }
+    .iconnew {
+      margin-left: 10 /360 * 100vw;
+      font-size: 40 /360 * 100vw;
+    }
+    .btnFollow {
+      width: 50 /360 * 100vw;
+      line-height: 24 /360 * 100vw;
+      margin-left: 220 /360 * 100vw;
+      font-size: 10 /360 * 100vw;
+      border: 1px solid #999;
+      border-radius: 15 /360 * 100vw;
 
-    &.unFollow {
-      border-color: #f00;
-      background-color: #f00;
-      color: #fff;
+      &.unFollow {
+        border-color: #f00;
+        background-color: #f00;
+        color: #fff;
+      }
     }
   }
-}
 
-.main {
-  padding: 0 20 /360 * 100vw;
-  .title {
-    font-size: 20 /360 * 100vw;
-    font-weight: 700;
-  }
-  .info {
-    font-size: 14 /360 * 100vw;
-    color: #888;
-    padding-top: 10 /360 * 100vw;
-  }
-  .content {
-    /deep/ img {
-      max-width: 100%;
+  .main {
+    padding: 0 20 /360 * 100vw;
+    .title {
+      font-size: 20 /360 * 100vw;
+      font-weight: 700;
+    }
+    .info {
+      font-size: 14 /360 * 100vw;
+      color: #888;
+      padding-top: 10 /360 * 100vw;
+    }
+    .content {
+      /deep/ img {
+        max-width: 100%;
+      }
     }
   }
 }
@@ -173,7 +205,7 @@ export default {
   .swicth {
     position: absolute;
     left: 45%;
-    top: 18%;
+    top: 14%;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 0 2 /360 * 100vw;
     border-radius: 50%;
@@ -230,6 +262,12 @@ export default {
 
     .iconfont {
       margin-right: 2 /360 * 100vw;
+    }
+
+    .icondianzan {
+      &.red {
+        color: red;
+      }
     }
 
     .iconweixin {
