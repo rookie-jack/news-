@@ -5,7 +5,7 @@
       <div class="info">
         <div class="name">{{ parentData.user.nickname }}</div>
         <div class="date">2小时前</div>
-        <div class="btn">回复</div>
+        <div class="btn" @click="sendComment">回复</div>
       </div>
       <div class="mainContent">
         {{ parentData.content }}
@@ -15,9 +15,15 @@
 </template>
 
 <script>
+import eventBus from "../../utils/eventBus";
 export default {
   name: "parent",
   props: ["parentData"],
+  methods: {
+    sendComment() {
+      eventBus.$emit("sendMsg", this.parentData.id);
+    },
+  },
 };
 </script>
 

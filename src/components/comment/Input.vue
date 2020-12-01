@@ -28,12 +28,22 @@
 </template>
 
 <script>
+import eventBus from "../../utils/eventBus";
 export default {
   data() {
     return {
       isshowText: false,
       content: "",
+      parentId: "",
     };
+  },
+  mounted() {
+    eventBus.$on("sendMsg", (val) => {
+      console.log("监听到点击事件");
+      console.log(val);
+      this.parentId = val;
+      this.showText();
+    });
   },
   methods: {
     showText() {
@@ -57,7 +67,7 @@ export default {
         method: "post",
         url: "/post_comment/" + this.$route.query.id,
         data: {
-          parent_id: "",
+          parent_id: this.parentId,
           content: this.content,
         },
       }).then((res) => {
