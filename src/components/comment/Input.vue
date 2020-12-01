@@ -1,8 +1,13 @@
 <template>
   <div class="footer">
     <!-- 未激活 -->
-    <div class="unactivate">
-      <input type="text" />
+    <div class="unactivate" v-if="!isshowText">
+      <input
+        type="text"
+        @focus="showText"
+        v-model="content"
+        placeholder="写跟帖"
+      />
       <div class="pinlun">
         <span class="iconfont iconpinglun-"></span>
         <div class="num">112</div>
@@ -10,12 +15,58 @@
       <span class="iconfont iconshoucang"></span>
       <span class="iconfont iconfenxiang"></span>
     </div>
-    <div v-if="false">打开的状态</div>
+    <div class="activate" v-if="isshowText">
+      <textarea
+        rows="3"
+        v-model="content"
+        @blur="unshowText"
+        ref="xs"
+      ></textarea>
+      <div class="btn" @click="reply">发送</div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      isshowText: false,
+      content: "",
+    };
+  },
+  methods: {
+    showText() {
+      this.isshowText = true;
+      //   setTimeout(() => {
+      //     this.$refs.xs.focus();
+      //   }, 100);
+      //   this.$nextTick(() => {}); vue提供的方法
+      this.$nextTick(() => {
+        this.$refs.xs.focus();
+      });
+    },
+    unshowText() {
+      setTimeout(() => {
+        this.isshowText = false;
+      }, 100);
+    },
+    reply() {
+      console.log(this.$route.query.id);
+      this.$axios({
+        method: "post",
+        url: "/post_comment/" + this.$route.query.id,
+        data: {
+          parent_id: "",
+          content: this.content,
+        },
+      }).then((res) => {
+        console.log(res.data);
+        this.content = "";
+      });
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -59,6 +110,36 @@ export default {};
         padding: 0 4 /360 * 100vw;
         border-radius: 6 /360 * 100vw;
       }
+    }
+  }
+
+  .activate {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+
+    textarea {
+      width: 261 /360 * 100vw;
+      height: 90 /360 * 100vw;
+      box-sizing: border-box;
+      padding: 10 /360 * 100vw;
+      border: 0;
+      outline: none;
+      background: #d7d7d7;
+      border-radius: 10 /360 * 100vw;
+      resize: none;
+    }
+
+    .btn {
+      //   margin-left: 20 /360 * 100vw;
+      width: 60 /360 * 100vw;
+      height: 26 /360 * 100vw;
+      background: red;
+      font-size: 16 /360 * 100vw;
+      line-height: 26 /360 * 100vw;
+      text-align: center;
+      color: #fff;
+      border-radius: 13 /360 * 100vw;
     }
   }
 }

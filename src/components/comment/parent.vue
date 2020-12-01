@@ -3,7 +3,7 @@
     <div class="parentBox">
       <parent :parentData="parentData.parent" v-if="parentData.parent" />
       <div class="info">
-        <div class="name">火星网友</div>
+        <div class="name">{{ parentData.user.nickname }}</div>
         <div class="date">2小时前</div>
         <div class="btn">回复</div>
       </div>
@@ -46,6 +46,8 @@ export default {
     font-size: 14 /360 * 100vw;
     color: #888;
     margin-bottom: 4 /360 * 100vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>

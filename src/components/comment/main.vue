@@ -1,9 +1,14 @@
 <template>
   <div class="box">
     <div class="info">
-      <img src="../../assets/logo.png" alt="" />
+      <img
+        v-if="commentData.user.head_img"
+        :src="$axios.defaults.baseURL + commentData.user.head_img"
+        alt=""
+      />
+      <img v-else src="../../assets/logo.png" alt="" />
       <div class="middle">
-        <div class="name">火星网友</div>
+        <div class="name">{{ commentData.user.nickname }}</div>
         <div class="date">2小时前</div>
       </div>
       <div class="btn">回复</div>
@@ -20,9 +25,7 @@ import parent from "./parent";
 export default {
   components: { parent },
   props: ["commentData"],
-  created() {
-    console.log(1);
-  },
+  created() {},
 };
 </script>
 
@@ -56,8 +59,11 @@ export default {
     }
   }
   .mainContent {
+    width: 100%;
     font-size: 14 /360 * 100vw;
     color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>
