@@ -69,6 +69,7 @@ export default {
     flex-grow: 1;
     padding-left: 10 /360 * 100vw;
     .name {
+      max-width: 160 /360 * 100vw;
       font-size: 16 /360 * 100vw;
       color: #333;
     }

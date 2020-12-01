@@ -73,6 +73,8 @@ export default {
       }).then((res) => {
         console.log(res.data);
         this.content = "";
+
+        this.$emit("reloadCommnet");
       });
     },
   },

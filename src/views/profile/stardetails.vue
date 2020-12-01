@@ -82,7 +82,7 @@
       更多跟帖
     </div>
 
-    <Input />
+    <Input @reloadCommnet="reloadCommnet" />
   </div>
 </template>
 
@@ -102,6 +102,18 @@ export default {
     console.log(this.$route.query.id);
   },
   methods: {
+    reloadCommnet() {
+      this.$axios({
+        url: "/post_comment/" + this.$route.query.id,
+      }).then((res) => {
+        console.log(res.data.data);
+        console.log(this.$route.query.id);
+        if (res.data.data.length > 3) {
+          res.data.data.length = 3;
+        }
+        this.commentList = res.data.data;
+      });
+    },
     loadPost() {
       this.$axios({
         url: "/post/" + this.$route.query.id,
@@ -113,7 +125,7 @@ export default {
     hanlder() {
       if (this.postData.has_follow == false) {
         this.$axios({
-          url: "/user_follows/" + this.postData.id,
+          url: "/user_follows/" + this.postData.user.id,
         }).then((res) => {
           console.log(res);
           this.postData.has_follow = true;
@@ -121,7 +133,7 @@ export default {
         });
       } else {
         this.$axios({
-          url: "/user_unfollow/" + this.postData.id,
+          url: "/user_unfollow/" + this.postData.user.id,
         }).then((res) => {
           console.log(res);
           this.postData.has_follow = false;
@@ -163,16 +175,7 @@ export default {
   },
   created() {
     this.loadPost();
-    this.$axios({
-      url: "/post_comment/" + this.$route.query.id,
-    }).then((res) => {
-      console.log(res.data.data);
-      console.log(this.$route.query.id);
-      if (res.data.data.length > 3) {
-        res.data.data.length = 3;
-      }
-      this.commentList = res.data.data;
-    });
+    this.reloadCommnet();
   },
 };
 </script>
@@ -265,11 +268,12 @@ export default {
       color: #888;
     }
     .btnFollow {
+      width: 110 /360 * 100vw;
       font-size: 16 /360 * 100vw;
       border: 1px solid #888;
       height: 30 /360 * 100vw;
       line-height: 30 /360 * 100vw;
-      padding: 0 16 /360 * 100vw;
+      text-align: center;
       border-radius: 15 /360 * 100vw;
       &.unFollow {
         border-color: #f00;
