@@ -10,6 +10,7 @@ import Follow from '../views/profile/Follow.vue'
 import Star from '../views/profile/star.vue'
 import Stardetails from '../views/profile/stardetails.vue'
 import MoreComment from '../views/MoreComment.vue'
+import Comment from '../views/profile/Comment.vue'
 
 Vue.use(VueRouter)
 
@@ -56,6 +57,13 @@ const routes = [
   {
     path: '/star',
     component: Star,
+    meta: {
+      needAuth: true
+    }
+  },
+  {
+    path: '/comment',
+    component: Comment,
     meta: {
       needAuth: true
     }

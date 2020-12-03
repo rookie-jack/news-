@@ -29,7 +29,11 @@
           :title="'我的关注'"
           :name="'关注的用户'"
         />
-        <UserBar title="我的跟帖" name="跟帖/回复" />
+        <UserBar
+          title="我的跟帖"
+          @click.native="$router.push('/comment')"
+          name="跟帖/回复"
+        />
         <UserBar
           @click.native="$router.push('/star')"
           title="我的收藏"
