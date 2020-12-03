@@ -20,7 +20,7 @@
 
     <!-- 显示三张图片 -->
     <div
-      v-if="PostData.type == 2 && PostData.cover.length >= 3"
+      v-if="PostData.type == 1 && PostData.cover.length >= 3"
       class="multiPost"
     >
       <div class="title">{{ PostData.title }}</div>
