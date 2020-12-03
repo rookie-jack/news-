@@ -37,12 +37,17 @@ export default {
       categoryList: [],
     };
   },
+  computed: {
+    currentCategory() {
+      return this.categoryList[this.activeCategoryIndex];
+    },
+  },
   watch: {
     activeCategoryIndex(newVal) {
       if (newVal == this.categoryList.length - 1) {
         this.$router.push("/manage");
       } else {
-        if (currentCategory.PostList.length == 0) {
+        if (this.currentCategory.PostList.length == 0) {
           this.loadPost();
         }
       }
@@ -103,36 +108,28 @@ export default {
   },
   methods: {
     loadMore() {
-      const currentCategory = this.categoryList[this.activeCategoryIndex];
-      currentCategory.pageIndex += 1;
+      this.currentCategory.pageIndex += 1;
       this.loadPost();
     },
     loadPost() {
-      const currentCategory = this.categoryList[this.activeCategoryIndex];
       this.$axios({
         url: "/post",
         params: {
-          category: currentCategory.id,
-          pageIndex: currentCategory.pageIndex,
-          pageSize: currentCategory.pageSize,
+          category: this.currentCategory.id,
+          pageIndex: this.currentCategory.pageIndex,
+          pageSize: this.currentCategory.pageSize,
         },
       }).then((res) => {
         console.log(res.data);
-        currentCategory.PostList = [...currentCategory.PostList];
+        this.currentCategory.PostList = [
+          ...this.currentCategory.PostList,
+          ...res.data.data,
+        ];
 
-        const newList = [];
-        currentCategory.PostList.forEach((element) => {
-          newList.push(element);
-        });
-        res.data.data.forEach((element) => {
-          newList.push(element);
-        });
-        currentCategory.PostList = newList;
+        this.currentCategory.loading = false;
 
-        currentCategory.loading = false;
-
-        if (res.data.data.length < currentCategory.pageSize) {
-          currentCategory.finished = true;
+        if (res.data.data.length < this.currentCategory.pageSize) {
+          this.currentCategory.finished = true;
         }
       });
     },
