@@ -3,7 +3,7 @@
     <!-- 图片文章样式 -->
     <div class="picture" v-if="postData.type == 1">
       <div class="header">
-        <span class="iconfont iconjiantou2"></span>
+        <span class="iconfont iconjiantou2" @click="$router.back()"></span>
         <span class="iconfont iconnew"></span>
         <div
           class="btnFollow"
@@ -34,6 +34,7 @@
       <div class="swicth" @click="onvideo" ref="swicth">
         <span class="iconfont iconshipin"></span>
       </div>
+      <span class="iconfont iconjiantou2" @click="$router.back()"></span>
       <div class="info">
         <img src="@/assets/logo.png" alt="" class="avatar" />
         <div class="name">{{ postData.user.nickname }}</div>
@@ -197,13 +198,14 @@ export default {
       font-size: 14 /360 * 100vw;
     }
     .iconnew {
+      flex-grow: 1;
       margin-left: 10 /360 * 100vw;
+      text-align: left;
       font-size: 40 /360 * 100vw;
     }
     .btnFollow {
-      width: 50 /360 * 100vw;
+      min-width: 50 /360 * 100vw;
       line-height: 24 /360 * 100vw;
-      margin-left: 220 /360 * 100vw;
       font-size: 10 /360 * 100vw;
       border: 1px solid #999;
       border-radius: 15 /360 * 100vw;
@@ -252,6 +254,13 @@ export default {
       color: #eee;
     }
   }
+  .iconjiantou2 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 8 /360 * 100vw;
+    font-size: 20 /360 * 100vw;
+  }
   .info {
     padding: 10 /360 * 100vw;
     display: flex;
@@ -268,7 +277,7 @@ export default {
       color: #888;
     }
     .btnFollow {
-      width: 110 /360 * 100vw;
+      min-width: 80 /360 * 100vw;
       font-size: 16 /360 * 100vw;
       border: 1px solid #888;
       height: 30 /360 * 100vw;
