@@ -38,17 +38,28 @@ export default {
     };
   },
   watch: {
-    activeCategoryIndex() {
-      const currentCategory = this.categoryList[this.activeCategoryIndex];
-      if (currentCategory.PostList.length == 0) {
-        this.loadPost();
+    activeCategoryIndex(newVal) {
+      if (newVal == this.categoryList.length - 1) {
+        this.$router.push("/manage");
+      } else {
+        if (currentCategory.PostList.length == 0) {
+          this.loadPost();
+        }
       }
     },
   },
   created() {
-    this.$axios({
-      url: "/category",
-    }).then((res) => {
+    if (localStorage.getItem("delproList")) {
+      const res = {
+        data: {
+          data: JSON.parse(localStorage.getItem("delproList")),
+        },
+      };
+
+      // }
+      // this.$axios({
+      //   url: "/category",
+      // }).then((res) => {
       this.categoryList = res.data.data.map((item) => {
         return {
           ...item,
@@ -59,9 +70,36 @@ export default {
           finished: false,
         };
       });
+      this.categoryList.push({
+        name: "+",
+      });
+
       console.log(this.categoryList);
       this.loadPost();
-    });
+    } else {
+      this.$axios({
+        url: "/category",
+      }).then((res) => {
+        this.categoryList = res.data.data.map((item) => {
+          return {
+            ...item,
+            postList: [],
+            pageIndex: 1,
+            pageSize: 6,
+            loading: false,
+            finished: false,
+          };
+        });
+
+        this.categoryList.push({
+          name: "+",
+        });
+
+        console.log(this.categoryList);
+
+        this.loadPost();
+      });
+    }
   },
   methods: {
     loadMore() {
@@ -103,4 +141,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/deep/ .van-tab:nth-last-child(2) {
+  background: #fff;
+  position: sticky;
+  right: -8px;
+  width: 44px;
+  line-height: 44px;
+}
 </style>

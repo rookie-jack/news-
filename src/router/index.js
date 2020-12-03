@@ -12,6 +12,7 @@ import Stardetails from '../views/profile/stardetails.vue'
 import MoreComment from '../views/MoreComment.vue'
 import Comment from '../views/profile/Comment.vue'
 import Search from '../views/Search.vue'
+import Manage from '../views/Manage.vue'
 
 Vue.use(VueRouter)
 
@@ -83,6 +84,10 @@ const routes = [
   {
     path: '/search',
     component: Search,
+  },
+  {
+    path: '/manage',
+    component: Manage,
   }
 ]
 
